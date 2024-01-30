@@ -4,7 +4,8 @@ class HashMap {
         this.buckets[15] = undefined//set initial array length === 16
 }
 
-    capacity() {//get amount of filled elems in the array
+length() {//get amount of filled elems in the array that is 
+    //returns the number of stored keys in the hash map
         return this.buckets.reduce((current, next) => {
             next ? next = 1 : next = 0
             return current + next
@@ -12,7 +13,7 @@ class HashMap {
     }
 
     loadFactor () {//percentage of the array fullness relatively to current length
-        return (this.capacity() / this.buckets.length) * 100
+        return this.length() / this.buckets.length * 100
     }
 
     hash(key) {//get hash code of the key
@@ -49,11 +50,39 @@ class HashMap {
         this.buckets[index] = object
     }
     }
-
+    //Take one argument as a key and returns the value that is assigned to this key.
+    // If a key is not found, return null
+    get(key) {
+        for (let elem of this.buckets)
+        if (elem && elem[key]) return elem[key]
+        return null
+    }
+    //Take a key as an argument and returns true or false based on
+    // whether or not the key is in the hash map
+    has(key) {
+        for (let elem of this.buckets)
+        if (elem && elem[key]) return true
+        return false
+    }
+    //Take a key as an argument. If the given key is in the hash map, 
+    //it remove the entry with that key and return true. 
+    //If the key isn’t in the hash map, it return false.
+    remove(key) {
+        let counter = 0
+        for (let elem of this.buckets) {
+            if (elem && elem[key]) {
+                this.buckets[counter] = undefined
+                return true
+            }
+        counter++  
+        }
+        return false
+    }
 }
 
 const student = new HashMap
 student.set('name', 'Dimon')
-console.log(student.buckets)
+console.log(student.remove('name'))
+console.log(student)
 
 
